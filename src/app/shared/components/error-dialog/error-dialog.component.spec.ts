@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConteudoComponent } from './conteudo.component';
+import { ErrorDialogComponent } from './error-dialog.component';
 
-describe('ConteudoComponent', () => {
-  let component: ConteudoComponent;
-  let fixture: ComponentFixture<ConteudoComponent>;
+describe('ErrorDialogComponent', () => {
+  let component: ErrorDialogComponent;
+  let fixture: ComponentFixture<ErrorDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConteudoComponent]
+      imports: [ErrorDialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ConteudoComponent);
+    fixture = TestBed.createComponent(ErrorDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
