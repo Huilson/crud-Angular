@@ -8,7 +8,7 @@ import { first, tap } from 'rxjs';
 })
 export class ConteudoService {
 
-  private readonly API = 'lista';
+  private readonly API = 'api/lista';
 
   constructor(private httpClient: HttpClient) { }
   
