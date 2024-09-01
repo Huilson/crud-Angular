@@ -6,6 +6,8 @@ import { catchError, Observable, of } from 'rxjs';
 import { error } from 'console';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { relative } from 'path';
 
 @Component({
   selector: 'app-conteudo',
@@ -16,24 +18,24 @@ import { ErrorDialogComponent } from '../../shared/components/error-dialog/error
 })
 export class ConteudoComponent {
   conteudo$: Observable <Conteudo[]>;
-  displayedColumns = ['_id', 'nome', 'cpf', 'numero'];
+  displayedColumns = ['_id', 'nome', 'cpf', 'numero', 'actions'];
 
   constructor(
     private service: ConteudoService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router : Router,
+    private route: ActivatedRoute
   ) {
-    this.service = this.service.list().pipe(
-      catchError(error => {
-        this.onError('Erro ao carregar!')
-        return of([])
-      })
-    );
+    this.conteudo$ = this.service.list()
   }
 
-  onError(msg: string){
+  /*onError(msg: string){
     this.dialog.open(ErrorDialogComponent,{
       data: msg
     });
+  }*/
 
+  onAdd(){
+    this.router.navigate(['new'], {relativeTo: this.route});
   }
 }
