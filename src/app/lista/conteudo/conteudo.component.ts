@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Conteudo } from './model/conteudo';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { ConteudoService } from './services/conteudo.service';
@@ -17,13 +17,18 @@ import { relative } from 'path';
   styleUrl: './conteudo.component.scss'
 })
 export class ConteudoComponent {
-  conteudo$: Observable <Conteudo[]>;
+
+ /* @Input() conteudo: Conteudo[] = [];
+  @Output() add = new EventEmitter(false);
+  @Output() edit = new EventEmitter(false);
+  @Output() remove = new EventEmitter(false);*/
+  conteudo$: Observable<Conteudo[]>;
   displayedColumns = ['_id', 'nome', 'cpf', 'numero', 'actions'];
 
   constructor(
     private service: ConteudoService,
     public dialog: MatDialog,
-    private router : Router,
+    private router: Router,
     private route: ActivatedRoute
   ) {
     this.conteudo$ = this.service.list()
@@ -36,6 +41,7 @@ export class ConteudoComponent {
   }*/
 
   onAdd(){
-    this.router.navigate(['new'], {relativeTo: this.route});
+    console.log('onAdd');
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 }

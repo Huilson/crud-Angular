@@ -18,4 +18,8 @@ export class ConteudoService {
       tap(conteudo => console.log(conteudo))
     );
   }
+  save(conteudo : Conteudo){
+    console.log(conteudo);
+    this.httpClient.post<Conteudo>(this.API, conteudo);
+  }  
 }

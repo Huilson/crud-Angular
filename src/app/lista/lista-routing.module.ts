@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConteudoComponent } from './conteudo/conteudo.component';
-import { ConteudoFormComponent } from './conteudo-form/conteudo-form.component';
 
 const routes: Routes = [
-  { path: '', component: ConteudoComponent },
-  { path: 'new', component: ConteudoFormComponent }
+    { path: '', pathMatch: 'full', redirectTo: 'conteudo' },
+    { path: 'conteudo', loadChildren: () => import('./lista.module').then(m => m.ListaModule) }
 ];
 
 @NgModule({
