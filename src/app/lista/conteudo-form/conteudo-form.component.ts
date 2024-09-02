@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,13 +18,17 @@ import { error } from 'console';
 })
 export class ConteudoFormComponent {
 
-  form: UntypedFormGroup;
+  form!: FormGroup;
 
-  constructor(private UntypedFormBuilder: UntypedFormBuilder, private service: ConteudoService, private snackBar: MatSnackBar, private location: Location) {
-    this.form = this.UntypedFormBuilder.group({
-      nome: [null],
-      cpf: [null],
-      numero: [null]
+  constructor(
+    private formBuilder: NonNullableFormBuilder,
+    private service: ConteudoService,
+    private snackBar: MatSnackBar,
+    private location: Location) {
+    this.form = this.formBuilder.group({
+      nome: new FormControl(''),
+      cpf: new FormControl(''),
+      numero: new FormControl('')
     });
   }
 
@@ -39,14 +43,14 @@ export class ConteudoFormComponent {
   }
 
   onReturn() {
-    this.location.back();
+    this.location.back();    
   }
 
   private onError() {
     this.snackBar.open('Erro ao salvar...', '', { duration: 3000 });
   }
 
-  private onSuccess() {    
+  private onSuccess() {
     this.snackBar.open('Salvo com sucesso!', '', { duration: 5000 });
     this.onReturn();
   }

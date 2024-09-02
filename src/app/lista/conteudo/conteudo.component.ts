@@ -1,29 +1,24 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Conteudo } from './model/conteudo';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { ConteudoService } from './services/conteudo.service';
-import { catchError, Observable, of } from 'rxjs';
-import { error } from 'console';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { relative } from 'path';
+import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
+import { ConteudoIndexComponent } from "../conteudo-index/conteudo-index.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-conteudo',
   standalone: true,
-  imports: [AppMaterialModule],
+  imports: [AppMaterialModule, ConteudoIndexComponent, CommonModule],
   templateUrl: './conteudo.component.html',
   styleUrl: './conteudo.component.scss'
 })
 export class ConteudoComponent {
 
- /* @Input() conteudo: Conteudo[] = [];
-  @Output() add = new EventEmitter(false);
-  @Output() edit = new EventEmitter(false);
-  @Output() remove = new EventEmitter(false);*/
-  conteudo$: Observable<Conteudo[]>;
-  displayedColumns = ['_id', 'nome', 'cpf', 'numero', 'actions'];
+  conteudo$: Observable<Conteudo[]>;  
 
   constructor(
     private service: ConteudoService,
@@ -34,11 +29,11 @@ export class ConteudoComponent {
     this.conteudo$ = this.service.list()
   }
 
-  /*onError(msg: string){
+  onError(msg: string){
     this.dialog.open(ErrorDialogComponent,{
       data: msg
     });
-  }*/
+  }
 
   onAdd(){
     console.log('onAdd');
