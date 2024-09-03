@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Conteudo } from '../conteudo/model/conteudo';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { ConteudoComponent } from '../conteudo/conteudo.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-conteudo-index',
   standalone: true,
-  imports: [AppMaterialModule, ConteudoComponent],
+  imports: [AppMaterialModule, ConteudoComponent, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './conteudo-index.component.html',
   styleUrl: './conteudo-index.component.scss'
 })

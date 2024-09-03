@@ -14,13 +14,17 @@
     <!-- CPF Column -->
     <ng-container matColumnDef="cpf">
         <mat-header-cell mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element"> {{element.cpf}} </mat-cell>
+        <mat-cell mat-cell *matCellDef="let element">
+             {{element.cpf | mask: "000.000.000-00"}}
+            </mat-cell>
     </ng-container>
 
     <!-- Contato Column -->
     <ng-container matColumnDef="numero">
         <mat-header-cell mat-header-cell *matHeaderCellDef> Contato </mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element"> {{element.numero}} </mat-cell>
+        <mat-cell mat-cell *matCellDef="let element"> 
+            {{element.numero | mask: "+00 (00) 0 0000-0000"}} 
+        </mat-cell>
     </ng-container>
 
     <!-- Actions Column -->

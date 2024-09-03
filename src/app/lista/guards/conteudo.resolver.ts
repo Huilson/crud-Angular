@@ -19,13 +19,3 @@ export class ConteudoResolver implements Resolve<Conteudo> {
   return of({ _id: '', nome: '', cpf: '', numero: '' });
   }
 }
-
-/*
-export const conteudoResolver: ResolveFn<Observable<Conteudo>> = (route, state, service: ConteudoService = inject(ConteudoService)) => {
-  console.log('load by resolve');
-  if (route.params?.['id']) {
-    return service.loadById(route.params['id']);
-  }
-  return of({ _id: '', nome: '', cpf: '', numero: '' });
-}
-*/

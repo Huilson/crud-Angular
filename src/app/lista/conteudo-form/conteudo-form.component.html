@@ -6,14 +6,25 @@
         <form [formGroup]="form">
             <mat-form-field class="full-width">
                 <input matInput placeholder="Nome" formControlName="nome">
+                @if (form.get('nome')?.invalid) {
+                    <mat-error>{{errorMessage('nome')}}</mat-error>
+                  }
             </mat-form-field>
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="CPF" formControlName="cpf">
+                <input matInput placeholder="CPF" formControlName="cpf"
+                mask="000.000.000-00" inputmode="numeric">
+                @if (form.get('cpf')?.invalid) {
+                    <mat-error>{{errorMessage('cpf')}}</mat-error>
+                  }
             </mat-form-field>
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="Contato" formControlName="numero">
+                <input matInput placeholder="Contato" formControlName="numero"
+                mask="+00 (00) 0 0000-0000" inputmode="numeric">
+                @if (form.get('numero')?.invalid) {
+                    <mat-error>{{errorMessage('numero')}}</mat-error>
+                  }
             </mat-form-field>
         </form>
     </mat-card-content>

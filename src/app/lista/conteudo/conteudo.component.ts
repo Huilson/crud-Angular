@@ -12,6 +12,7 @@ import { MatPaginator, PageEvent, MatPaginatorModule } from '@angular/material/p
 import { AsyncPipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { error } from 'console';
+import { DialogsComponent } from './dialogs/dialogs.component';
 
 @Component({
   selector: 'app-conteudo',
@@ -52,13 +53,23 @@ export class ConteudoComponent {
   }
 
   onDelete(conteudo: Conteudo) {
-    this.service.remove(conteudo._id).subscribe(
-      () => {
-        this.refresh();
-        this.snackbar.open('Item excluido', '', { duration: 3000 })
-      },
-      () => this.onError('Erro ao remover item')
-    );
+    const dialogRef = this.dialog.open(DialogsComponent, {
+      data: 'Deseja realmente remover esse item?',
+    });
+
+    dialogRef.afterClosed().subscribe((result: Boolean) => {
+      if (result) {
+        this.service.remove(conteudo._id).subscribe(
+          () => {
+            this.refresh();
+            this.snackbar.open('Item excluido', '', { duration: 3000 })
+          },
+          () => this.onError('Erro ao remover item')
+        );
+      }
+    });
+
+
   }
 
   refresh() {

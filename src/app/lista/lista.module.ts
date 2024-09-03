@@ -8,8 +8,6 @@ import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [],
   providers: [provideHttpClient()],
@@ -19,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ListaRoutingModule,
     AppMaterialModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule    
   ]
 })
 export class ListaModule { }
