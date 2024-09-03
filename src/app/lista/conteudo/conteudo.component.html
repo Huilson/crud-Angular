@@ -1,7 +1,11 @@
 <mat-card>
     <div class=".flex">
         <app-conteudo-index 
-        *ngIf="conteudo$ | async as conteudo; else loading" [conteudo]="conteudo">
+        *ngIf="conteudo$ | async as conteudo; else loading" 
+        [conteudo]="conteudo"
+        (clickAdd)="onAdd()"
+        (clickEdit)="onEdit($event)"
+        (clickDelete)="onDelete()">
         </app-conteudo-index>
 
         <ng-template #loading>

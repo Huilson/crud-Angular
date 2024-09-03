@@ -11,18 +11,19 @@ export class ConteudoService {
 
   private readonly API = 'api/lista';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
   
   list() {
-    console.log('Listando');
-    return this.httpClient.get<Conteudo[]>(this.API).pipe(
+    console.log('indexing');
+    return this.http.get<Conteudo[]>(this.API).pipe(
       first(),
       tap(conteudo => console.log('caiu no list'))
     );
   }
 
   loadById(id: string) {
-    return this.httpClient.get<Conteudo>('${this.API}/${id}');
+    console.log('load by id', id);    
+    return this.http.get<Conteudo>(this.API+'/'+id);    
   }
 
   save(conteudo: Partial<Conteudo>) {
@@ -36,16 +37,19 @@ export class ConteudoService {
   }
 
   private create(conteudo: Partial<Conteudo>) {
-    return this.httpClient.post<Conteudo>(this.API, conteudo).subscribe(
+    return this.http.post<Conteudo>(this.API, conteudo).subscribe(
       c => {console.log('Updated config:', c)}
     );
   }
 
   private update(conteudo: Partial<Conteudo>) {
-    return this.httpClient.put<Conteudo>('${this.API}/${conteudo._id}', conteudo).pipe(first());
+    return this.http.put<Conteudo>(this.API+'/'+conteudo._id, conteudo).subscribe(
+      c => {console.log('Updated config:', c)}
+    );
   }
 
   remove(id: string) {
-    return this.httpClient.delete('${this.API}/${id}').pipe(first());
+    console.log('remove');
+    return this.http.delete('${this.API}/${id}').pipe(first());
   }
 }

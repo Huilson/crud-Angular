@@ -29,12 +29,14 @@
             <span>Ações</span>
         </mat-header-cell>
 
-        <mat-cell *matCellDef="let course" class="action-column">
-            <button mat-icon-button color="primary" aria-label="Editar Curso">
+        <mat-cell *matCellDef="let element" class="action-column">
+            <button mat-icon-button color="primary" aria-label="Editar Curso"
+            (click)="onEdit(element)">
                 <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-icon-button color="warn" aria-label="Remover Curso">
+            <button mat-icon-button color="warn" aria-label="Remover Curso"
+            (click)="onDelete()">
                 <mat-icon>delete</mat-icon>
             </button>
         </mat-cell>

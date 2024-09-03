@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Conteudo } from '../conteudo/model/conteudo';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { ConteudoComponent } from '../conteudo/conteudo.component';
 
@@ -13,14 +12,23 @@ import { ConteudoComponent } from '../conteudo/conteudo.component';
 })
 export class ConteudoIndexComponent {
   @Input() conteudo: Conteudo[] = [];
+  @Output() clickAdd = new EventEmitter(false);
+  @Output() clickEdit = new EventEmitter(false);
+  @Output() clickDelete = new EventEmitter(false);
+
   readonly displayedColumns = ['_id', 'nome', 'cpf', 'numero', 'actions'];
 
-  constructor(    
-    private router: Router,
-    private route: ActivatedRoute){  }
+  onAdd(){    
+    this.clickAdd.emit(true);
+    //console.log('Send Emit');
+  }
 
-  onAdd(){
-    console.log('onAdd');
-    this.router.navigate(['new'], { relativeTo: this.route });
+  onEdit(conteudo: Conteudo){
+    this.clickEdit.emit(conteudo);
+    console.log(conteudo);
+  }
+
+  onDelete(){
+    
   }
 }
