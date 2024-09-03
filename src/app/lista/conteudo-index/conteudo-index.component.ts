@@ -25,10 +25,11 @@ export class ConteudoIndexComponent {
 
   onEdit(conteudo: Conteudo){
     this.clickEdit.emit(conteudo);
-    console.log(conteudo);
+    //console.log(conteudo+' sent to update');
   }
 
-  onDelete(){
-    
+  onDelete(conteudo: Conteudo){
+    this.clickDelete.emit(conteudo);
+    //console.log(conteudo+' sent to delete');
   }
 }

@@ -10,6 +10,8 @@ import { ConteudoIndexComponent } from "../conteudo-index/conteudo-index.compone
 import { CommonModule } from '@angular/common';
 import { MatPaginator, PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { AsyncPipe } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { error } from 'console';
 
 @Component({
   selector: 'app-conteudo',
@@ -20,20 +22,16 @@ import { AsyncPipe } from '@angular/common';
 })
 export class ConteudoComponent {
 
-  conteudo$: Observable<Conteudo[]>;
+  conteudo$: Observable<Conteudo[]> | null = null;
 
   constructor(
     private service: ConteudoService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackbar: MatSnackBar
   ) {
-    this.conteudo$ = this.service.list().pipe(
-      catchError(error => {
-        this.onError('Erro ao carregar lista');
-        return of([]);
-      })
-    );
+    this.refresh();
   }
 
   onError(msg: string) {
@@ -53,7 +51,22 @@ export class ConteudoComponent {
     console.log(conteudo._id);*/
   }
 
-  onDelete() {
+  onDelete(conteudo: Conteudo) {
+    this.service.remove(conteudo._id).subscribe(
+      () => {
+        this.refresh();
+        this.snackbar.open('Item excluido', '', { duration: 3000 })
+      },
+      () => this.onError('Erro ao remover item')
+    );
+  }
 
+  refresh() {
+    this.conteudo$ = this.service.list().pipe(
+      catchError(error => {
+        this.onError('Erro ao carregar lista');
+        return of([]);
+      })
+    );
   }
 }

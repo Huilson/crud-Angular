@@ -50,6 +50,6 @@ export class ConteudoService {
 
   remove(id: string) {
     console.log('remove');
-    return this.http.delete('${this.API}/${id}').pipe(first());
+    return this.http.delete(this.API+'/'+id).pipe(first());
   }
 }
