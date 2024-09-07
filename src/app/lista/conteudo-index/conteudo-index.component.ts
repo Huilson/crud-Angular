@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Conteudo } from '../conteudo/model/conteudo';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { ConteudoComponent } from '../conteudo/conteudo.component';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
+
 
 @Component({
   selector: 'app-conteudo-index',
@@ -13,9 +14,10 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 })
 export class ConteudoIndexComponent {
   @Input() conteudo: Conteudo[] = [];
+  @Output() typeNome = new EventEmitter(false);
   @Output() clickAdd = new EventEmitter(false);
   @Output() clickEdit = new EventEmitter(false);
-  @Output() clickDelete = new EventEmitter(false);
+  @Output() clickDelete = new EventEmitter(false);  
 
   readonly displayedColumns = ['_id', 'nome', 'cpf', 'numero', 'actions'];
 
@@ -33,4 +35,9 @@ export class ConteudoIndexComponent {
     this.clickDelete.emit(conteudo);
     //console.log(conteudo+' sent to delete');
   }
+
+  onSearch(event: Event){    
+    this.typeNome.emit(event);
+    //console.log(filterValue.trim().toLowerCase()+' searching...');
+  }  
 }

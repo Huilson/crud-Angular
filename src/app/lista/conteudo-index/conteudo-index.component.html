@@ -1,3 +1,8 @@
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="onSearch($event)" placeholder="Ex. ium" #input>
+</mat-form-field>
+
 <mat-table [dataSource]="conteudo">
     <!-- Id Column -->
     <ng-container matColumnDef="_id">
@@ -15,15 +20,15 @@
     <ng-container matColumnDef="cpf">
         <mat-header-cell mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
         <mat-cell mat-cell *matCellDef="let element">
-             {{element.cpf | mask: "000.000.000-00"}}
-            </mat-cell>
+            {{element.cpf | mask: "000.000.000-00"}}
+        </mat-cell>
     </ng-container>
 
     <!-- Contato Column -->
     <ng-container matColumnDef="numero">
         <mat-header-cell mat-header-cell *matHeaderCellDef> Contato </mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element"> 
-            {{element.numero | mask: "+00 (00) 0 0000-0000"}} 
+        <mat-cell mat-cell *matCellDef="let element">
+            {{element.numero | mask: "+00 (00) 0 0000-0000"}}
         </mat-cell>
     </ng-container>
 
@@ -34,13 +39,11 @@
         </mat-header-cell>
 
         <mat-cell *matCellDef="let element" class="action-column">
-            <button mat-icon-button color="primary" aria-label="Editar Curso"
-            (click)="onEdit(element)">
+            <button mat-icon-button color="primary" aria-label="Editar Curso" (click)="onEdit(element)">
                 <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-icon-button color="warn" aria-label="Remover Curso"
-            (click)="onDelete(element)">
+            <button mat-icon-button color="warn" aria-label="Remover Curso" (click)="onDelete(element)">
                 <mat-icon>delete</mat-icon>
             </button>
         </mat-cell>
@@ -50,7 +53,14 @@
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </mat-table>
 
-<button mat-fab color="accent" aria-label="Adicionar" (click)="onAdd()" 
-class="add-button" title="Clique para adicionar um novo registro">
+<!-- Row shown when there is no matching data. -->
+<mat-row mat-header-cell *matNoDataRow>
+    <mat-cell>
+        No data matching the filter "{{input.value}}"
+    </mat-cell>
+</mat-row>
+
+<button mat-fab color="accent" aria-label="Adicionar" (click)="onAdd()" class="add-button"
+    title="Clique para adicionar um novo registro">
     <mat-icon>add</mat-icon>
 </button>

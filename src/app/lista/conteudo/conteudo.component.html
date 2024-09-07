@@ -1,18 +1,22 @@
 <mat-card>
-    <div class=".flex">
-        <app-conteudo-index 
-        *ngIf="conteudo$ | async as conteudo; else loading" 
-        [conteudo]="conteudo"
-        (clickAdd)="onAdd()"
-        (clickEdit)="onEdit($event)"
-        (clickDelete)="onDelete($event)">
+    <div *ngIf="conteudo$ | async as conteudo; else loading" class=".flex">
+
+        <app-conteudo-index [conteudo]="conteudo.conteudo" 
+            (clickAdd)="onAdd()" 
+            (clickEdit)="onEdit($event)"
+            (clickDelete)="onDelete($event)"
+            (onSearch)="onSearch($event)"
+            >
         </app-conteudo-index>
 
-        <ng-template #loading>
-            <div class="load-spinner">
-                <mat-spinner></mat-spinner>
-            </div>
-        </ng-template>
-
+        <mat-paginator [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" showFirstLastButtons
+            [pageIndex]="pageIndex" [pageSize]="pageSize" [length]="conteudo.totalElements" (page)="refresh($event)"
+            aria-label="Selecione um página"></mat-paginator>
     </div>
+
+    <ng-template #loading>
+        <div class="load-spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-template>
 </mat-card>

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
 import { Conteudo } from './model/conteudo';
+import { ConteudoPage } from './model/conteudo-page';
+
+import { Component, ViewChild } from '@angular/core';
 import { AppMaterialModule } from '../../shared/app-material/app-material.module';
 import { ConteudoService } from './services/conteudo.service';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorDialogComponent } from '../../shared/components/error-dialog/error-dialog.component';
@@ -11,19 +13,26 @@ import { CommonModule } from '@angular/common';
 import { MatPaginator, PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { AsyncPipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { error } from 'console';
 import { DialogsComponent } from './dialogs/dialogs.component';
 
 @Component({
   selector: 'app-conteudo',
   standalone: true,
-  imports: [AppMaterialModule, ConteudoIndexComponent, CommonModule, AsyncPipe],
+  imports: [AppMaterialModule, ConteudoIndexComponent, CommonModule, AsyncPipe, MatPaginatorModule],
   templateUrl: './conteudo.component.html',
   styleUrl: './conteudo.component.scss'
 })
 export class ConteudoComponent {
 
-  conteudo$: Observable<Conteudo[]> | null = null;
+  conteudo$: Observable<ConteudoPage> | null = null;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  pageIndex = 0;
+  pageSize = 10;
+  pageSizeOptions = [5, 10, 25];
+
+  showPageSizeOptions = true;
+  showFirstLastButtons = true;
 
   constructor(
     private service: ConteudoService,
@@ -68,15 +77,33 @@ export class ConteudoComponent {
         );
       }
     });
-
-
   }
 
-  refresh() {
-    this.conteudo$ = this.service.list().pipe(
+  onSearch(event: Event, pageEvent: PageEvent = {length:0, pageIndex: 0, pageSize: 10}) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.conteudo$ = this.service.loadByNome(pageEvent.pageIndex, pageEvent.pageSize, filterValue.trim().toLowerCase())
+    .pipe(
+      tap(() => {
+        this.pageIndex = pageEvent.pageIndex;
+        this.pageSize = pageEvent.pageSize;
+      }),
       catchError(error => {
         this.onError('Erro ao carregar lista');
-        return of([]);
+        return of({conteudo: [], totalElements: 0, totalPages: 0});
+      })
+    );
+  }
+
+  refresh(pageEvent: PageEvent = {length:0, pageIndex: 0, pageSize: 10}) {
+    this.conteudo$ = this.service.list(pageEvent.pageIndex, pageEvent.pageSize)
+    .pipe(
+      tap(() => {
+        this.pageIndex = pageEvent.pageIndex;
+        this.pageSize = pageEvent.pageSize;
+      }),
+      catchError(error => {
+        this.onError('Erro ao carregar lista');
+        return of({conteudo: [], totalElements: 0, totalPages: 0});
       })
     );
   }
