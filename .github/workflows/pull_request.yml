@@ -1,4 +1,4 @@
-name: minhaBomba
+name: appAngular
 
 # Controls when the workflow will run
 on:
@@ -42,4 +42,10 @@ jobs:
         # Passo 5
       - name: Run unit test
         run: yarn ts-prune --errror
+
+        # Passo 6
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
         
